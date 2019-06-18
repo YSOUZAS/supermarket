@@ -213,4 +213,88 @@ class BrandDeleteBuilder implements Builder<BrandDelete, BrandDeleteBuilder> {
   }
 }
 
+class _$BrandEdit extends BrandEdit {
+  @override
+  final String documentID;
+  @override
+  final String name;
+
+  factory _$BrandEdit([void Function(BrandEditBuilder) updates]) =>
+      (new BrandEditBuilder()..update(updates)).build();
+
+  _$BrandEdit._({this.documentID, this.name}) : super._();
+
+  @override
+  BrandEdit rebuild(void Function(BrandEditBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  BrandEditBuilder toBuilder() => new BrandEditBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is BrandEdit &&
+        documentID == other.documentID &&
+        name == other.name;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc($jc(0, documentID.hashCode), name.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('BrandEdit')
+          ..add('documentID', documentID)
+          ..add('name', name))
+        .toString();
+  }
+}
+
+class BrandEditBuilder implements Builder<BrandEdit, BrandEditBuilder> {
+  _$BrandEdit _$v;
+
+  String _documentID;
+  String get documentID => _$this._documentID;
+  set documentID(String documentID) => _$this._documentID = documentID;
+
+  String _name;
+  String get name => _$this._name;
+  set name(String name) => _$this._name = name;
+
+  BrandEditBuilder();
+
+  BrandEditBuilder get _$this {
+    if (_$v != null) {
+      _documentID = _$v.documentID;
+      _name = _$v.name;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(BrandEdit other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$BrandEdit;
+  }
+
+  @override
+  void update(void Function(BrandEditBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$BrandEdit build() {
+    final _$result =
+        _$v ?? new _$BrandEdit._(documentID: documentID, name: name);
+    replace(_$result);
+    return _$result;
+  }
+}
+
 // ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

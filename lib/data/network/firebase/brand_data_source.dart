@@ -18,4 +18,8 @@ class BrandDataSource {
   deleteBrand(String documentID) async {
     await database.document(documentID).delete();
   }
+
+  editBrand(String documentID, String name) async {
+    await database.document(documentID).updateData({"name": name});
+  }
 }

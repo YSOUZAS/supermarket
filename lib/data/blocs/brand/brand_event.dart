@@ -30,3 +30,14 @@ abstract class BrandDelete extends BrandEvent
 
   factory BrandDelete([updates(BrandDeleteBuilder b)]) = _$BrandDelete;
 }
+
+abstract class BrandEdit extends BrandEvent
+    implements Built<BrandEdit, BrandEditBuilder> {
+  @nullable
+  String get documentID;
+  @nullable
+  String get name;
+  BrandEdit._();
+
+  factory BrandEdit([updates(BrandEditBuilder b)]) = _$BrandEdit;
+}

@@ -4,6 +4,7 @@ import 'package:kiwi/kiwi.dart' as kiwi;
 import 'package:supermarket/data/blocs/brand/index.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:supermarket/data/models/brand/index.dart';
 import 'package:supermarket/pages/brand/widgets/index.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -68,17 +69,17 @@ class _BrandsPageState extends State<BrandsPage> {
                           caption: 'Update',
                           color: Colors.black45,
                           icon: Icons.edit,
-                          onTap: () => {},
+                          onTap: () {
+                            return buildShowDialog(
+                                context, state.brands[index], true);
+                          },
                         ),
                         IconSlideAction(
-                          caption: 'Delete',
-                          color: Colors.red,
-                          icon: Icons.delete,
-                          onTap: () =>
-                            _brandBloc
-                                .onDeleteBrand(state.brands[index].documentID);
-                          
-                        ),
+                            caption: 'Delete',
+                            color: Colors.red,
+                            icon: Icons.delete,
+                            onTap: () => _brandBloc
+                                .onDeleteBrand(state.brands[index].documentID)),
                       ],
                     ),
                   );
@@ -91,18 +92,26 @@ class _BrandsPageState extends State<BrandsPage> {
           elevation: 10,
           child: Icon(FontAwesomeIcons.plus),
           onPressed: () {
-            return showDialog(
-                context: context,
-                barrierDismissible: true,
-                builder: (BuildContext context) {
-                  return BrandAddDialog(
-                    addBrand: _brandBloc.onInsertBrand,
-                  );
-                });
+            return buildShowDialog(context, null, false);
           },
         ),
       ),
       builder: (BuildContext context) => _brandBloc,
     );
+  }
+
+  Future buildShowDialog(BuildContext context, Brand brand, bool edit) {
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return BrandAddDialog(
+            edit: edit,
+            addBrand: _brandBloc.onInsertBrand,
+            editBrand: _brandBloc.onEditBrand,
+            name: brand != null ? brand.data.name : "",
+            documentID: brand != null ? brand.documentID : "",
+          );
+        });
   }
 }
