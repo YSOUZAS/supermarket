@@ -10,6 +10,7 @@ part 'data_brand.g.dart';
 
 abstract class DataBrand implements Built<DataBrand, DataBrandBuilder> {
   String get name;
+  String get imageUrl;
   DataBrand._();
 
   factory DataBrand([updates(DataBrandBuilder b)]) = _$DataBrand;

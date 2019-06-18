@@ -20,6 +20,9 @@ class _$DataBrandSerializer implements StructuredSerializer<DataBrand> {
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'imageUrl',
+      serializers.serialize(object.imageUrl,
+          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -40,6 +43,10 @@ class _$DataBrandSerializer implements StructuredSerializer<DataBrand> {
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'imageUrl':
+          result.imageUrl = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
       }
     }
 
@@ -50,13 +57,18 @@ class _$DataBrandSerializer implements StructuredSerializer<DataBrand> {
 class _$DataBrand extends DataBrand {
   @override
   final String name;
+  @override
+  final String imageUrl;
 
   factory _$DataBrand([void Function(DataBrandBuilder) updates]) =>
       (new DataBrandBuilder()..update(updates)).build();
 
-  _$DataBrand._({this.name}) : super._() {
+  _$DataBrand._({this.name, this.imageUrl}) : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('DataBrand', 'name');
+    }
+    if (imageUrl == null) {
+      throw new BuiltValueNullFieldError('DataBrand', 'imageUrl');
     }
   }
 
@@ -70,17 +82,21 @@ class _$DataBrand extends DataBrand {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is DataBrand && name == other.name;
+    return other is DataBrand &&
+        name == other.name &&
+        imageUrl == other.imageUrl;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, name.hashCode));
+    return $jf($jc($jc(0, name.hashCode), imageUrl.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('DataBrand')..add('name', name))
+    return (newBuiltValueToStringHelper('DataBrand')
+          ..add('name', name)
+          ..add('imageUrl', imageUrl))
         .toString();
   }
 }
@@ -92,11 +108,16 @@ class DataBrandBuilder implements Builder<DataBrand, DataBrandBuilder> {
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
 
+  String _imageUrl;
+  String get imageUrl => _$this._imageUrl;
+  set imageUrl(String imageUrl) => _$this._imageUrl = imageUrl;
+
   DataBrandBuilder();
 
   DataBrandBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
+      _imageUrl = _$v.imageUrl;
       _$v = null;
     }
     return this;
@@ -117,7 +138,7 @@ class DataBrandBuilder implements Builder<DataBrand, DataBrandBuilder> {
 
   @override
   _$DataBrand build() {
-    final _$result = _$v ?? new _$DataBrand._(name: name);
+    final _$result = _$v ?? new _$DataBrand._(name: name, imageUrl: imageUrl);
     replace(_$result);
     return _$result;
   }
