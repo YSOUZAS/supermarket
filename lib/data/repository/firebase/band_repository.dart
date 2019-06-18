@@ -31,4 +31,8 @@ class BrandRepository {
   Future<void> insertBrand(String name) async {
     await _brandDataSource.insertBrand(name);
   }
+
+  Future<void> deleteBrand(String documentID) async {
+    await _brandDataSource.deleteBrand(documentID);
+  }
 }

@@ -12,6 +12,10 @@ class BrandDataSource {
   }
 
   insertBrand(String name) async {
-    await database.add({"name": name});
+    await database.add({"name": name, "imageUrl": ""});
+  }
+
+  deleteBrand(String documentID) async {
+    await database.document(documentID).delete();
   }
 }

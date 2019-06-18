@@ -74,7 +74,10 @@ class _BrandsPageState extends State<BrandsPage> {
                           caption: 'Delete',
                           color: Colors.red,
                           icon: Icons.delete,
-                          onTap: () => {},
+                          onTap: () =>
+                            _brandBloc
+                                .onDeleteBrand(state.brands[index].documentID);
+                          
                         ),
                       ],
                     ),

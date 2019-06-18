@@ -19,10 +19,15 @@ class BrandBloc extends Bloc<BrandEvent, BrandState> {
     dispatch(BrandInsert((b) => b..name = name));
   }
 
+  void onDeleteBrand(String documentID) {
+    dispatch(BrandDelete((b) => b..documentID = documentID));
+  }
+
   @override
   Stream<BrandState> mapEventToState(BrandEvent event) async* {
     if (event is BrandInitiated) yield* mapBrandInitiated(event);
     if (event is BrandInsert) yield* mapBrandInsert(event);
+    if (event is BrandDelete) yield* mapBrandBrandDelete(event);
   }
 
   Stream<BrandState> mapBrandInitiated(BrandInitiated event) async* {
@@ -41,6 +46,17 @@ class BrandBloc extends Bloc<BrandEvent, BrandState> {
 
     try {
       await _repository.insertBrand(event.name);
+      onBrandInitiated();
+    } on Exception catch (e) {
+      yield BrandState.failure(e.toString());
+    }
+  }
+
+  Stream<BrandState> mapBrandBrandDelete(BrandDelete event) async* {
+    yield BrandState.loading();
+
+    try {
+      await _repository.deleteBrand(event.documentID);
       onBrandInitiated();
     } on Exception catch (e) {
       yield BrandState.failure(e.toString());

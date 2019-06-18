@@ -22,3 +22,11 @@ abstract class BrandInsert extends BrandEvent
 
   factory BrandInsert([updates(BrandInsertBuilder b)]) = _$BrandInsert;
 }
+
+abstract class BrandDelete extends BrandEvent
+    implements Built<BrandDelete, BrandDeleteBuilder> {
+  String get documentID;
+  BrandDelete._();
+
+  factory BrandDelete([updates(BrandDeleteBuilder b)]) = _$BrandDelete;
+}
