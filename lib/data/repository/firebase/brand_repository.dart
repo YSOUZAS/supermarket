@@ -19,10 +19,8 @@ class BrandRepository {
         var brand = Brand.fromJson(mapBrand);
         brands = (brands.toBuilder()..add(brand)).build();
       }
-      return brands;
-    } else {
-      return brands;
     }
+    return brands;
   }
 
   Future<void> insertBrand(String name) async =>

@@ -11,23 +11,18 @@ class BrandBloc extends Bloc<BrandEvent, BrandState> {
   @override
   BrandState get initialState => BrandState.initial();
 
-  void onBrandInitiated() {
-    dispatch(BrandInitiated());
-  }
+  void onBrandInitiated() => dispatch(BrandInitiated());
 
-  void onInsertBrand(String name) {
-    dispatch(BrandInsert((b) => b..name = name));
-  }
+  void onInsertBrand(String name) =>
+      dispatch(BrandInsert((b) => b..name = name));
 
-  void onDeleteBrand(String documentID) {
-    dispatch(BrandDelete((b) => b..documentID = documentID));
-  }
+  void onDeleteBrand(String documentID) =>
+      dispatch(BrandDelete((b) => b..documentID = documentID));
 
-  void onEditBrand(String documentID, String name) {
-    dispatch(BrandEdit((b) => b
-      ..documentID = documentID
-      ..name = name));
-  }
+  void onEditBrand(String documentID, String name) =>
+      dispatch(BrandEdit((b) => b
+        ..documentID = documentID
+        ..name = name));
 
   @override
   Stream<BrandState> mapEventToState(BrandEvent event) async* {

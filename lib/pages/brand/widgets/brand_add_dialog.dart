@@ -56,12 +56,10 @@ class BrandAddDialog extends StatelessWidget {
             if (!_formKey.currentState.validate()) {
               return;
             }
-
             if (!edit)
               addBrand(_nameTextController.text);
             else
               editBrand(documentID, _nameTextController.text);
-
             Navigator.of(context).pop();
           },
         )

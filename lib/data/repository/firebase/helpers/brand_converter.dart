@@ -8,7 +8,6 @@ class BrandConverter {
       "documentID": document.documentID,
       "data": document.data
     };
-    var dataJson = json.encode(brandMap);
-    return dataJson;
+    return json.encode(brandMap);
   }
 }

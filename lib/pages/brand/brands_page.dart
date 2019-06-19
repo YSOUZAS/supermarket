@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:supermarket/data/models/brand/index.dart';
 import 'package:supermarket/pages/brand/widgets/index.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:supermarket/pages/common/widgets/index.dart';
 
 class BrandsPage extends StatefulWidget {
   static const String routeName = "/brands";
@@ -38,9 +39,7 @@ class _BrandsPageState extends State<BrandsPage> {
           bloc: _brandBloc,
           builder: (BuildContext context, BrandState state) {
             if (state.isLoading) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
+              return CommonCircularProgressIndicator();
             }
             if (state.isSuccessful) {
               return ListView.builder(
@@ -69,10 +68,8 @@ class _BrandsPageState extends State<BrandsPage> {
                           caption: 'Update',
                           color: Colors.black45,
                           icon: Icons.edit,
-                          onTap: () {
-                            return buildShowDialog(
-                                context, state.brands[index], true);
-                          },
+                          onTap: () => buildShowDialog(
+                              context, state.brands[index], true),
                         ),
                         IconSlideAction(
                             caption: 'Delete',

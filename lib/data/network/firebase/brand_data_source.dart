@@ -7,19 +7,14 @@ class BrandDataSource {
 
   CollectionReference get database => db.collection("brands");
 
-  Future<QuerySnapshot> getBrands() async {
-    return await database.getDocuments();
-  }
+  Future<QuerySnapshot> getBrands() async => await database.getDocuments();
 
-  insertBrand(String name) async {
-    await database.add({"name": name, "imageUrl": ""});
-  }
+  insertBrand(String name) async =>
+      await database.add({"name": name, "imageUrl": ""});
 
-  deleteBrand(String documentID) async {
-    await database.document(documentID).delete();
-  }
+  deleteBrand(String documentID) async =>
+      await database.document(documentID).delete();
 
-  editBrand(String documentID, String name) async {
-    await database.document(documentID).updateData({"name": name});
-  }
+  editBrand(String documentID, String name) async =>
+      await database.document(documentID).updateData({"name": name});
 }
