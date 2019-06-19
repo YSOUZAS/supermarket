@@ -1,1 +1,1 @@
-export 'band_repository.dart';
+export 'brand_repository.dart';

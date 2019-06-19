@@ -2,7 +2,8 @@ import 'package:built_collection/built_collection.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:supermarket/data/models/brand/index.dart';
 import 'package:supermarket/data/network/firebase/index.dart';
-import 'dart:convert';
+
+import 'package:supermarket/data/repository/firebase/helpers/index.dart';
 
 class BrandRepository {
   final BrandDataSource _brandDataSource;
@@ -14,12 +15,8 @@ class BrandRepository {
     BuiltList<Brand> brands = new BuiltList<Brand>();
     if (result.documents.isNotEmpty) {
       for (DocumentSnapshot document in result.documents) {
-        Map<String, dynamic> brandMap = {
-          "documentID": document.documentID,
-          "data": document.data
-        };
-        var dataJson = json.encode(brandMap);
-        var brand = Brand.fromJson(dataJson);
+        var mapBrand = BrandConverter.toMap(document);
+        var brand = Brand.fromJson(mapBrand);
         brands = (brands.toBuilder()..add(brand)).build();
       }
       return brands;
@@ -28,15 +25,12 @@ class BrandRepository {
     }
   }
 
-  Future<void> insertBrand(String name) async {
-    await _brandDataSource.insertBrand(name);
-  }
+  Future<void> insertBrand(String name) async =>
+      await _brandDataSource.insertBrand(name);
 
-  Future<void> deleteBrand(String documentID) async {
-    await _brandDataSource.deleteBrand(documentID);
-  }
+  Future<void> deleteBrand(String documentID) async =>
+      await _brandDataSource.deleteBrand(documentID);
 
-  Future<void> editBrand(String documentID, String name) async {
-    await _brandDataSource.editBrand(documentID, name);
-  }
+  Future<void> editBrand(String documentID, String name) async =>
+      await _brandDataSource.editBrand(documentID, name);
 }
