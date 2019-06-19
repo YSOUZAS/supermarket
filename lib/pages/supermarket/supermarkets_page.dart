@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,8 +6,10 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kiwi/kiwi.dart' as kiwi;
 import 'package:supermarket/data/blocs/supermarket/index.dart';
+import 'package:supermarket/data/models/brand/index.dart';
 import 'package:supermarket/data/services/index.dart';
 import 'package:supermarket/pages/common/widgets/index.dart';
+import 'package:supermarket/pages/supermarket/widgets/index.dart';
 
 class SupermarketsPage extends StatefulWidget {
   static const String routeName = "/supermarkets";
@@ -17,6 +20,7 @@ class SupermarketsPage extends StatefulWidget {
 
 class _SupermarketsPageState extends State<SupermarketsPage> {
   final _supermarketBloc = kiwi.Container().resolve<SupermarketBloc>();
+  BuiltList<Brand> brands = BuiltList<Brand>();
   @override
   void initState() {
     _supermarketBloc.onSupermarketInitiated();
@@ -40,6 +44,7 @@ class _SupermarketsPageState extends State<SupermarketsPage> {
               return CommonCircularProgressIndicator();
             }
             if (state.isSuccessful) {
+              brands = state.brands;
               return ListView.builder(
                 itemCount: state.supermarkets.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -86,10 +91,28 @@ class _SupermarketsPageState extends State<SupermarketsPage> {
         floatingActionButton: FloatingActionButton(
           elevation: 10,
           child: Icon(FontAwesomeIcons.plus),
-          onPressed: () {},
+          onPressed: () {
+            callDialog(context, brands);
+          },
         ),
       ),
       builder: (BuildContext context) => _supermarketBloc,
     );
+  }
+
+  Future callDialog(BuildContext context, BuiltList<Brand> brands) async {
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return SupermarketFormDialog(
+            addSupermarket: null,
+            documentID: null,
+            name: "Alvalade",
+            edit: true,
+            editSupermarket: null,
+            brandsBuild: brands,
+          );
+        });
   }
 }

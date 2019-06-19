@@ -14,7 +14,8 @@ void initiKiwi() {
     ..registerFactory((c) => BrandRepository(c.resolve()))
     ..registerFactory((c) => SupermarketRepository(c.resolve()))
     ..registerFactory((c) => SupermarketService(c.resolve(), c.resolve()))
-    ..registerFactory((c) => SupermarketBloc(c.resolve(), c.resolve()))
+    ..registerFactory(
+        (c) => SupermarketBloc(c.resolve(), c.resolve(), c.resolve()))
     ..registerFactory((c) => BrandBloc(c.resolve()));
 
   kiwi.Container().silent = true;

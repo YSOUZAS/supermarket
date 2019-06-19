@@ -6,9 +6,12 @@ import 'package:supermarket/data/services/index.dart';
 
 class SupermarketBloc extends Bloc<SupermarketEvent, SupermarketState> {
   final SupermarketRepository _repository;
+  final BrandRepository _brandRepository;
+
   final SupermarketService _service;
 
-  SupermarketBloc(this._repository, this._service) : super();
+  SupermarketBloc(this._repository, this._service, this._brandRepository)
+      : super();
 
   @override
   SupermarketState get initialState => SupermarketState.initial();
@@ -43,7 +46,8 @@ class SupermarketBloc extends Bloc<SupermarketEvent, SupermarketState> {
 
     try {
       final supermarkets = await _service.getAllFullSupermarkets();
-      yield SupermarketState.success(supermarkets);
+      final brands = await _brandRepository.getBrands();
+      yield SupermarketState.success(supermarkets, brands);
     } on Exception catch (e) {
       yield SupermarketState.failure(e.toString());
     }

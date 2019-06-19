@@ -13,12 +13,15 @@ class _$SupermarketState extends SupermarketState {
   final BuiltList<Supermarket> supermarkets;
   @override
   final String error;
+  @override
+  final BuiltList<Brand> brands;
 
   factory _$SupermarketState(
           [void Function(SupermarketStateBuilder) updates]) =>
       (new SupermarketStateBuilder()..update(updates)).build();
 
-  _$SupermarketState._({this.isLoading, this.supermarkets, this.error})
+  _$SupermarketState._(
+      {this.isLoading, this.supermarkets, this.error, this.brands})
       : super._() {
     if (isLoading == null) {
       throw new BuiltValueNullFieldError('SupermarketState', 'isLoading');
@@ -28,6 +31,9 @@ class _$SupermarketState extends SupermarketState {
     }
     if (error == null) {
       throw new BuiltValueNullFieldError('SupermarketState', 'error');
+    }
+    if (brands == null) {
+      throw new BuiltValueNullFieldError('SupermarketState', 'brands');
     }
   }
 
@@ -45,13 +51,16 @@ class _$SupermarketState extends SupermarketState {
     return other is SupermarketState &&
         isLoading == other.isLoading &&
         supermarkets == other.supermarkets &&
-        error == other.error;
+        error == other.error &&
+        brands == other.brands;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, isLoading.hashCode), supermarkets.hashCode),
-        error.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, isLoading.hashCode), supermarkets.hashCode),
+            error.hashCode),
+        brands.hashCode));
   }
 
   @override
@@ -59,7 +68,8 @@ class _$SupermarketState extends SupermarketState {
     return (newBuiltValueToStringHelper('SupermarketState')
           ..add('isLoading', isLoading)
           ..add('supermarkets', supermarkets)
-          ..add('error', error))
+          ..add('error', error)
+          ..add('brands', brands))
         .toString();
   }
 }
@@ -82,6 +92,10 @@ class SupermarketStateBuilder
   String get error => _$this._error;
   set error(String error) => _$this._error = error;
 
+  ListBuilder<Brand> _brands;
+  ListBuilder<Brand> get brands => _$this._brands ??= new ListBuilder<Brand>();
+  set brands(ListBuilder<Brand> brands) => _$this._brands = brands;
+
   SupermarketStateBuilder();
 
   SupermarketStateBuilder get _$this {
@@ -89,6 +103,7 @@ class SupermarketStateBuilder
       _isLoading = _$v.isLoading;
       _supermarkets = _$v.supermarkets?.toBuilder();
       _error = _$v.error;
+      _brands = _$v.brands?.toBuilder();
       _$v = null;
     }
     return this;
@@ -115,12 +130,16 @@ class SupermarketStateBuilder
           new _$SupermarketState._(
               isLoading: isLoading,
               supermarkets: supermarkets.build(),
-              error: error);
+              error: error,
+              brands: brands.build());
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'supermarkets';
         supermarkets.build();
+
+        _$failedField = 'brands';
+        brands.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'SupermarketState', _$failedField, e.toString());
