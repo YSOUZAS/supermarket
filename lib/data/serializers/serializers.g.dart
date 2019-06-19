@@ -9,6 +9,7 @@ part of serializers;
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Brand.serializer)
       ..add(DataBrand.serializer)
+      ..add(DataSupermarket.serializer)
       ..add(Supermarket.serializer))
     .build();
 

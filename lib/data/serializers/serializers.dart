@@ -7,6 +7,6 @@ import 'package:supermarket/data/models/supermarket/index.dart';
 
 part 'serializers.g.dart';
 
-@SerializersFor(const [Brand, DataBrand, Supermarket])
+@SerializersFor(const [Brand, DataBrand, Supermarket, DataSupermarket])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

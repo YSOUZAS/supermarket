@@ -21,8 +21,9 @@ class _$SupermarketSerializer implements StructuredSerializer<Supermarket> {
       'documentID',
       serializers.serialize(object.documentID,
           specifiedType: const FullType(String)),
-      'name',
-      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'data',
+      serializers.serialize(object.data,
+          specifiedType: const FullType(DataSupermarket)),
     ];
     if (object.brand != null) {
       result
@@ -48,9 +49,10 @@ class _$SupermarketSerializer implements StructuredSerializer<Supermarket> {
           result.documentID = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+        case 'data':
+          result.data.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(DataSupermarket))
+              as DataSupermarket);
           break;
         case 'brand':
           result.brand.replace(serializers.deserialize(value,
@@ -67,19 +69,19 @@ class _$Supermarket extends Supermarket {
   @override
   final String documentID;
   @override
-  final String name;
+  final DataSupermarket data;
   @override
   final Brand brand;
 
   factory _$Supermarket([void Function(SupermarketBuilder) updates]) =>
       (new SupermarketBuilder()..update(updates)).build();
 
-  _$Supermarket._({this.documentID, this.name, this.brand}) : super._() {
+  _$Supermarket._({this.documentID, this.data, this.brand}) : super._() {
     if (documentID == null) {
       throw new BuiltValueNullFieldError('Supermarket', 'documentID');
     }
-    if (name == null) {
-      throw new BuiltValueNullFieldError('Supermarket', 'name');
+    if (data == null) {
+      throw new BuiltValueNullFieldError('Supermarket', 'data');
     }
   }
 
@@ -95,21 +97,21 @@ class _$Supermarket extends Supermarket {
     if (identical(other, this)) return true;
     return other is Supermarket &&
         documentID == other.documentID &&
-        name == other.name &&
+        data == other.data &&
         brand == other.brand;
   }
 
   @override
   int get hashCode {
     return $jf(
-        $jc($jc($jc(0, documentID.hashCode), name.hashCode), brand.hashCode));
+        $jc($jc($jc(0, documentID.hashCode), data.hashCode), brand.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('Supermarket')
           ..add('documentID', documentID)
-          ..add('name', name)
+          ..add('data', data)
           ..add('brand', brand))
         .toString();
   }
@@ -122,9 +124,10 @@ class SupermarketBuilder implements Builder<Supermarket, SupermarketBuilder> {
   String get documentID => _$this._documentID;
   set documentID(String documentID) => _$this._documentID = documentID;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  DataSupermarketBuilder _data;
+  DataSupermarketBuilder get data =>
+      _$this._data ??= new DataSupermarketBuilder();
+  set data(DataSupermarketBuilder data) => _$this._data = data;
 
   BrandBuilder _brand;
   BrandBuilder get brand => _$this._brand ??= new BrandBuilder();
@@ -135,7 +138,7 @@ class SupermarketBuilder implements Builder<Supermarket, SupermarketBuilder> {
   SupermarketBuilder get _$this {
     if (_$v != null) {
       _documentID = _$v.documentID;
-      _name = _$v.name;
+      _data = _$v.data?.toBuilder();
       _brand = _$v.brand?.toBuilder();
       _$v = null;
     }
@@ -161,10 +164,14 @@ class SupermarketBuilder implements Builder<Supermarket, SupermarketBuilder> {
     try {
       _$result = _$v ??
           new _$Supermarket._(
-              documentID: documentID, name: name, brand: _brand?.build());
+              documentID: documentID,
+              data: data.build(),
+              brand: _brand?.build());
     } catch (_) {
       String _$failedField;
       try {
+        _$failedField = 'data';
+        data.build();
         _$failedField = 'brand';
         _brand?.build();
       } catch (e) {
