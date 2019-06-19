@@ -17,7 +17,6 @@ abstract class Supermarket implements Built<Supermarket, SupermarketBuilder> {
 
   @nullable
   Brand get brand;
-  set brand(Brand b) => brand = b;
 
   Supermarket._();
 

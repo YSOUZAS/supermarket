@@ -28,8 +28,8 @@ class SupermarketRepository {
     final document =
         await _supermarketDataSource.getSupermarketByID(documentID);
     var mapSupermarket = SupermarketConverter.toMap(document);
-    var brand = Supermarket.fromJson(mapSupermarket);
-    return brand;
+    var supermarket = Supermarket.fromJson(mapSupermarket);
+    return supermarket;
   }
 
   Future<void> insertSupermarket(String name, String brandId) async =>

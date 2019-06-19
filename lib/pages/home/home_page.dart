@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:supermarket/pages/brand/index.dart';
+import 'package:supermarket/pages/supermarket/index.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = "/home";
@@ -13,7 +14,7 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   List<Widget> pages = [
     Container(),
-    Container(),
+    SupermarketsPage(),
     BrandsPage(),
     Container(),
     Container(),
