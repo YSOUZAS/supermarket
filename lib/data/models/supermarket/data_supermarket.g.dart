@@ -22,6 +22,9 @@ class _$DataSupermarketSerializer
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'brandID',
+      serializers.serialize(object.brandID,
+          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -42,6 +45,10 @@ class _$DataSupermarketSerializer
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'brandID':
+          result.brandID = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
       }
     }
 
@@ -52,13 +59,18 @@ class _$DataSupermarketSerializer
 class _$DataSupermarket extends DataSupermarket {
   @override
   final String name;
+  @override
+  final String brandID;
 
   factory _$DataSupermarket([void Function(DataSupermarketBuilder) updates]) =>
       (new DataSupermarketBuilder()..update(updates)).build();
 
-  _$DataSupermarket._({this.name}) : super._() {
+  _$DataSupermarket._({this.name, this.brandID}) : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('DataSupermarket', 'name');
+    }
+    if (brandID == null) {
+      throw new BuiltValueNullFieldError('DataSupermarket', 'brandID');
     }
   }
 
@@ -73,17 +85,21 @@ class _$DataSupermarket extends DataSupermarket {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is DataSupermarket && name == other.name;
+    return other is DataSupermarket &&
+        name == other.name &&
+        brandID == other.brandID;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, name.hashCode));
+    return $jf($jc($jc(0, name.hashCode), brandID.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('DataSupermarket')..add('name', name))
+    return (newBuiltValueToStringHelper('DataSupermarket')
+          ..add('name', name)
+          ..add('brandID', brandID))
         .toString();
   }
 }
@@ -96,11 +112,16 @@ class DataSupermarketBuilder
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
 
+  String _brandID;
+  String get brandID => _$this._brandID;
+  set brandID(String brandID) => _$this._brandID = brandID;
+
   DataSupermarketBuilder();
 
   DataSupermarketBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
+      _brandID = _$v.brandID;
       _$v = null;
     }
     return this;
@@ -121,7 +142,8 @@ class DataSupermarketBuilder
 
   @override
   _$DataSupermarket build() {
-    final _$result = _$v ?? new _$DataSupermarket._(name: name);
+    final _$result =
+        _$v ?? new _$DataSupermarket._(name: name, brandID: brandID);
     replace(_$result);
     return _$result;
   }

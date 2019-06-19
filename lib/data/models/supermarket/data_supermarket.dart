@@ -12,6 +12,7 @@ part 'data_supermarket.g.dart';
 abstract class DataSupermarket
     implements Built<DataSupermarket, DataSupermarketBuilder> {
   String get name;
+  String get brandID;
 
   DataSupermarket._();
 
