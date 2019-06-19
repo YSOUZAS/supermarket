@@ -17,4 +17,7 @@ class BrandDataSource {
 
   editBrand(String documentID, String name) async =>
       await database.document(documentID).updateData({"name": name});
+
+  Future<DocumentSnapshot> getBrandByID(String documentID) async =>
+      await database.document(documentID).get();
 }

@@ -23,6 +23,13 @@ class BrandRepository {
     return brands;
   }
 
+  Future<Brand> getBrandByID(String documentID) async {
+    final document = await _brandDataSource.getBrandByID(documentID);
+    var mapBrand = BrandConverter.toMap(document);
+    var brand = Brand.fromJson(mapBrand);
+    return brand;
+  }
+
   Future<void> insertBrand(String name) async =>
       await _brandDataSource.insertBrand(name);
 
