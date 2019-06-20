@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kiwi/kiwi.dart' as kiwi;
 import 'package:supermarket/data/blocs/brand/index.dart';
@@ -40,8 +39,7 @@ class _BrandsPageState extends State<BrandsPage> {
           builder: (BuildContext context, BrandState state) {
             if (state.isLoading) {
               return CommonCircularProgressIndicator();
-            }
-            if (state.isSuccessful) {
+            } else if (state.isSuccessful) {
               return ListView.builder(
                 itemCount: state.brands.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -52,16 +50,8 @@ class _BrandsPageState extends State<BrandsPage> {
                       child: Container(
                         color: Colors.white,
                         child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            child: CachedNetworkImage(
-                              placeholder: (context, url) =>
-                                  new CommonCircularProgressIndicator(),
-                              errorWidget: (context, url, error) =>
-                                  new Icon(Icons.error),
-                              imageUrl: state.brands[index].data.imageUrl,
-                            ),
-                            foregroundColor: Colors.white,
+                          leading: CommonCircleAvatar(
+                            url: state.brands[index].data.imageUrl,
                           ),
                           title: Text(state.brands[index].data.name),
                         ),
@@ -85,6 +75,11 @@ class _BrandsPageState extends State<BrandsPage> {
                     ),
                   );
                 },
+              );
+            } else {
+              return CenteredMessage(
+                icon: FontAwesomeIcons.timesCircle,
+                message: "There are no brands registered!",
               );
             }
           },

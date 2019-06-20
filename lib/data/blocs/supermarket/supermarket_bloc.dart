@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:supermarket/data/blocs/supermarket/index.dart';
+import 'package:supermarket/data/models/supermarket/index.dart';
 import 'package:supermarket/data/repository/firebase/index.dart';
 import 'package:supermarket/data/services/index.dart';
 
@@ -35,7 +37,6 @@ class SupermarketBloc extends Bloc<SupermarketEvent, SupermarketState> {
   @override
   Stream<SupermarketState> mapEventToState(SupermarketEvent event) async* {
     yield SupermarketState.loading();
-
     if (event is SupermarketInitiated) yield* mapSupermarketInitiated(event);
     if (event is SupermarketInsert) yield* mapSupermarketInsert(event);
     if (event is SupermarketDelete)

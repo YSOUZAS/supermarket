@@ -24,7 +24,7 @@ class SupermarketService {
 
   Future<BuiltList<Supermarket>> getAllFullSupermarkets() async {
     var supermarketsToRefactor = await _supermarketRepository.getSupermarkets();
-    var supermarkets = BuiltList<Supermarket>();
+    var supermarkets = new BuiltList<Supermarket>();
 
     for (Supermarket supermarket in supermarketsToRefactor) {
       var brand = await getBrandByID(supermarket.data.brandID);

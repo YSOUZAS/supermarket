@@ -7,6 +7,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kiwi/kiwi.dart' as kiwi;
 import 'package:supermarket/data/blocs/supermarket/index.dart';
 import 'package:supermarket/data/models/brand/index.dart';
+import 'package:supermarket/data/services/index.dart';
+import 'package:supermarket/pages/common/widgets/common_slidable.dart';
 import 'package:supermarket/pages/common/widgets/index.dart';
 import 'package:supermarket/pages/supermarket/widgets/index.dart';
 
@@ -28,8 +30,8 @@ class _SupermarketsPageState extends State<SupermarketsPage> {
 
   @override
   void dispose() {
-    super.dispose();
     _supermarketBloc.dispose();
+    super.dispose();
   }
 
   @override
@@ -39,50 +41,36 @@ class _SupermarketsPageState extends State<SupermarketsPage> {
         body: BlocBuilder(
           bloc: _supermarketBloc,
           builder: (BuildContext context, SupermarketState state) {
+            brands = state.brands;
             if (state.isLoading) {
               return CommonCircularProgressIndicator();
-            }
-            if (state.isSuccessful) {
-              brands = state.brands;
-              return ListView.builder(
-                itemCount: state.supermarkets.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    child: Slidable(
-                      actionPane: SlidableDrawerActionPane(),
-                      actionExtentRatio: 0.25,
-                      child: Container(
-                        color: Colors.white,
-                        child: ListTile(
-                          leading: CommonCircleAvatar(
-                            url: state.supermarkets[index].brand.data.imageUrl,
-                          ),
-                          title: Text(
-                              "${state.supermarkets[index].brand.data.name} - ${state.supermarkets[index].data.name}"),
-                        ),
-                      ),
-                      actions: null,
-                      secondaryActions: <Widget>[
-                        CommonIconSlidAction(
-                          text: 'Update',
-                          color: Colors.black45,
-                          icon: Icons.edit,
-                          onTap: () => callDialog(
+            } else if (state.isSuccessful) {
+              if (state.supermarkets.isNotEmpty)
+                return ListView.builder(
+                  itemCount: state.supermarkets.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Card(
+                      child: CommonSlidable(
+                        imageUrl: state.supermarkets[index].brand.data.imageUrl,
+                        text:
+                            "${state.supermarkets[index].brand.data.name} - ${state.supermarkets[index].data.name}",
+                        secondaryActions: <Widget>[
+                          _getUpdateCommonIconSlideAction(
                               documentID: state.supermarkets[index].documentID,
                               name: state.supermarkets[index].data.name,
-                              defaultBrand: state.supermarkets[index].brand),
-                        ),
-                        CommonIconSlidAction(
-                          color: Colors.red,
-                          icon: Icons.delete,
-                          onTap: () => _supermarketBloc.onDeleteSupermarket(
+                              brand: state.supermarkets[index].brand),
+                          _getDeleteCommonIconSlideAction(
                               state.supermarkets[index].documentID),
-                          text: 'Delete',
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                        ],
+                        actions: null,
+                      ),
+                    );
+                  },
+                );
+            } else {
+              return CenteredMessage(
+                icon: FontAwesomeIcons.timesCircle,
+                message: "There are no supermarkets registered!",
               );
             }
           },
@@ -96,6 +84,28 @@ class _SupermarketsPageState extends State<SupermarketsPage> {
         ),
       ),
       builder: (BuildContext context) => _supermarketBloc,
+    );
+  }
+
+  CommonIconSlidAction _getUpdateCommonIconSlideAction(
+      {@required String documentID,
+      @required String name,
+      @required Brand brand}) {
+    return CommonIconSlidAction(
+      text: 'Update',
+      color: Colors.black45,
+      icon: Icons.edit,
+      onTap: () =>
+          callDialog(documentID: documentID, name: name, defaultBrand: brand),
+    );
+  }
+
+  CommonIconSlidAction _getDeleteCommonIconSlideAction(String documentID) {
+    return CommonIconSlidAction(
+      text: 'Delete',
+      color: Colors.red,
+      icon: Icons.delete,
+      onTap: () => _supermarketBloc.onDeleteSupermarket(documentID),
     );
   }
 
