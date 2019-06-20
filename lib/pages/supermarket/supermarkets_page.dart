@@ -7,7 +7,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kiwi/kiwi.dart' as kiwi;
 import 'package:supermarket/data/blocs/supermarket/index.dart';
 import 'package:supermarket/data/models/brand/index.dart';
-import 'package:supermarket/data/services/index.dart';
 import 'package:supermarket/pages/common/widgets/index.dart';
 import 'package:supermarket/pages/supermarket/widgets/index.dart';
 
@@ -55,17 +54,8 @@ class _SupermarketsPageState extends State<SupermarketsPage> {
                       child: Container(
                         color: Colors.white,
                         child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            child: CachedNetworkImage(
-                              placeholder: (context, url) =>
-                                  new CommonCircularProgressIndicator(),
-                              errorWidget: (context, url, error) =>
-                                  new Icon(Icons.error),
-                              imageUrl:
-                                  state.supermarkets[index].brand.data.imageUrl,
-                            ),
-                            foregroundColor: Colors.white,
+                          leading: CommonCircleAvatar(
+                            url: state.supermarkets[index].brand.data.imageUrl,
                           ),
                           title: Text(
                               "${state.supermarkets[index].brand.data.name} - ${state.supermarkets[index].data.name}"),
@@ -73,24 +63,22 @@ class _SupermarketsPageState extends State<SupermarketsPage> {
                       ),
                       actions: null,
                       secondaryActions: <Widget>[
-                        IconSlideAction(
-                          caption: 'Update',
+                        CommonIconSlidAction(
+                          text: 'Update',
                           color: Colors.black45,
                           icon: Icons.edit,
-                          onTap: () {
-                            callDialog(
-                                documentID:
-                                    state.supermarkets[index].documentID,
-                                name: state.supermarkets[index].data.name,
-                                defaultBrand: state.supermarkets[index].brand);
-                          },
+                          onTap: () => callDialog(
+                              documentID: state.supermarkets[index].documentID,
+                              name: state.supermarkets[index].data.name,
+                              defaultBrand: state.supermarkets[index].brand),
                         ),
-                        IconSlideAction(
-                            caption: 'Delete',
-                            color: Colors.red,
-                            icon: Icons.delete,
-                            onTap: () => _supermarketBloc.onDeleteSupermarket(
-                                state.supermarkets[index].documentID)),
+                        CommonIconSlidAction(
+                          color: Colors.red,
+                          icon: Icons.delete,
+                          onTap: () => _supermarketBloc.onDeleteSupermarket(
+                              state.supermarkets[index].documentID),
+                          text: 'Delete',
+                        ),
                       ],
                     ),
                   );

@@ -34,6 +34,8 @@ class SupermarketBloc extends Bloc<SupermarketEvent, SupermarketState> {
 
   @override
   Stream<SupermarketState> mapEventToState(SupermarketEvent event) async* {
+    yield SupermarketState.loading();
+
     if (event is SupermarketInitiated) yield* mapSupermarketInitiated(event);
     if (event is SupermarketInsert) yield* mapSupermarketInsert(event);
     if (event is SupermarketDelete)
@@ -43,8 +45,6 @@ class SupermarketBloc extends Bloc<SupermarketEvent, SupermarketState> {
 
   Stream<SupermarketState> mapSupermarketInitiated(
       SupermarketInitiated event) async* {
-    yield SupermarketState.loading();
-
     try {
       final supermarkets = await _service.getAllFullSupermarkets();
       final brands = await _brandRepository.getBrands();
@@ -56,8 +56,6 @@ class SupermarketBloc extends Bloc<SupermarketEvent, SupermarketState> {
 
   Stream<SupermarketState> mapSupermarketInsert(
       SupermarketInsert event) async* {
-    yield SupermarketState.loading();
-
     try {
       await _repository.insertSupermarket(
           name: event.name, brandId: event.brandID);
@@ -69,8 +67,6 @@ class SupermarketBloc extends Bloc<SupermarketEvent, SupermarketState> {
 
   Stream<SupermarketState> mapSupermarketSupermarketEdit(
       SupermarketEdit event) async* {
-    yield SupermarketState.loading();
-
     try {
       await _repository.editSupermarket(
           documentID: event.documentID,
@@ -84,8 +80,6 @@ class SupermarketBloc extends Bloc<SupermarketEvent, SupermarketState> {
 
   Stream<SupermarketState> mapSupermarketSupermarketDelete(
       SupermarketDelete event) async* {
-    yield SupermarketState.loading();
-
     try {
       await _repository.deleteSupermarket(documentID: event.documentID);
       onSupermarketInitiated();

@@ -26,6 +26,8 @@ class BrandBloc extends Bloc<BrandEvent, BrandState> {
 
   @override
   Stream<BrandState> mapEventToState(BrandEvent event) async* {
+    yield BrandState.loading();
+
     if (event is BrandInitiated) yield* mapBrandInitiated(event);
     if (event is BrandInsert) yield* mapBrandInsert(event);
     if (event is BrandDelete) yield* mapBrandBrandDelete(event);
@@ -33,8 +35,6 @@ class BrandBloc extends Bloc<BrandEvent, BrandState> {
   }
 
   Stream<BrandState> mapBrandInitiated(BrandInitiated event) async* {
-    yield BrandState.loading();
-
     try {
       final searchResult = await _repository.getBrands();
       yield BrandState.success(searchResult);
@@ -44,8 +44,6 @@ class BrandBloc extends Bloc<BrandEvent, BrandState> {
   }
 
   Stream<BrandState> mapBrandInsert(BrandInsert event) async* {
-    yield BrandState.loading();
-
     try {
       await _repository.insertBrand(event.name);
       onBrandInitiated();
@@ -55,8 +53,6 @@ class BrandBloc extends Bloc<BrandEvent, BrandState> {
   }
 
   Stream<BrandState> mapBrandBrandDelete(BrandDelete event) async* {
-    yield BrandState.loading();
-
     try {
       await _repository.deleteBrand(event.documentID);
       onBrandInitiated();
@@ -66,8 +62,6 @@ class BrandBloc extends Bloc<BrandEvent, BrandState> {
   }
 
   Stream<BrandState> mapBrandBrandEdit(BrandEdit event) async* {
-    yield BrandState.loading();
-
     try {
       await _repository.editBrand(event.documentID, event.name);
       onBrandInitiated();
