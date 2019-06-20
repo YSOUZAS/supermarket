@@ -32,13 +32,13 @@ class SupermarketRepository {
     return supermarket;
   }
 
-  Future<void> insertSupermarket(String name, String brandId) async =>
+  Future<void> insertSupermarket({String name, String brandId}) async =>
       await _supermarketDataSource.insertSupermarket(name, brandId);
 
-  Future<void> deleteSupermarket(String documentID) async =>
+  Future<void> deleteSupermarket({String documentID}) async =>
       await _supermarketDataSource.deleteSupermarket(documentID);
 
   Future<void> editSupermarket(
-          String documentID, String name, String brandId) async =>
+          {String documentID, String name, String brandId}) async =>
       await _supermarketDataSource.editSupermarket(documentID, name, brandId);
 }

@@ -55,6 +55,10 @@ class _BrandsPageState extends State<BrandsPage> {
                           leading: CircleAvatar(
                             backgroundColor: Colors.white,
                             child: CachedNetworkImage(
+                              placeholder: (context, url) =>
+                                  new CommonCircularProgressIndicator(),
+                              errorWidget: (context, url, error) =>
+                                  new Icon(Icons.error),
                               imageUrl: state.brands[index].data.imageUrl,
                             ),
                             foregroundColor: Colors.white,

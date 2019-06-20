@@ -26,9 +26,10 @@ class SupermarketBloc extends Bloc<SupermarketEvent, SupermarketState> {
   void onDeleteSupermarket(String documentID) =>
       dispatch(SupermarketDelete((b) => b..documentID = documentID));
 
-  void onEditSupermarket(String documentID, String name) =>
+  void onEditSupermarket(String documentID, String name, String brandID) =>
       dispatch(SupermarketEdit((b) => b
         ..documentID = documentID
+        ..brandID = brandID
         ..name = name));
 
   @override
@@ -54,11 +55,42 @@ class SupermarketBloc extends Bloc<SupermarketEvent, SupermarketState> {
   }
 
   Stream<SupermarketState> mapSupermarketInsert(
-      SupermarketInsert event) async* {}
+      SupermarketInsert event) async* {
+    yield SupermarketState.loading();
+
+    try {
+      await _repository.insertSupermarket(
+          name: event.name, brandId: event.brandID);
+      onSupermarketInitiated();
+    } on Exception catch (e) {
+      yield SupermarketState.failure(e.toString());
+    }
+  }
 
   Stream<SupermarketState> mapSupermarketSupermarketEdit(
-      SupermarketEdit event) async* {}
+      SupermarketEdit event) async* {
+    yield SupermarketState.loading();
+
+    try {
+      await _repository.editSupermarket(
+          documentID: event.documentID,
+          name: event.name,
+          brandId: event.brandID);
+      onSupermarketInitiated();
+    } on Exception catch (e) {
+      yield SupermarketState.failure(e.toString());
+    }
+  }
 
   Stream<SupermarketState> mapSupermarketSupermarketDelete(
-      SupermarketDelete event) async* {}
+      SupermarketDelete event) async* {
+    yield SupermarketState.loading();
+
+    try {
+      await _repository.deleteSupermarket(documentID: event.documentID);
+      onSupermarketInitiated();
+    } on Exception catch (e) {
+      yield SupermarketState.failure(e.toString());
+    }
+  }
 }

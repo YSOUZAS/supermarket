@@ -58,6 +58,10 @@ class _SupermarketsPageState extends State<SupermarketsPage> {
                           leading: CircleAvatar(
                             backgroundColor: Colors.white,
                             child: CachedNetworkImage(
+                              placeholder: (context, url) =>
+                                  new CommonCircularProgressIndicator(),
+                              errorWidget: (context, url, error) =>
+                                  new Icon(Icons.error),
                               imageUrl:
                                   state.supermarkets[index].brand.data.imageUrl,
                             ),
@@ -73,13 +77,20 @@ class _SupermarketsPageState extends State<SupermarketsPage> {
                           caption: 'Update',
                           color: Colors.black45,
                           icon: Icons.edit,
-                          onTap: () {},
+                          onTap: () {
+                            callDialog(
+                                documentID:
+                                    state.supermarkets[index].documentID,
+                                name: state.supermarkets[index].data.name,
+                                defaultBrand: state.supermarkets[index].brand);
+                          },
                         ),
                         IconSlideAction(
                             caption: 'Delete',
                             color: Colors.red,
                             icon: Icons.delete,
-                            onTap: () {}),
+                            onTap: () => _supermarketBloc.onDeleteSupermarket(
+                                state.supermarkets[index].documentID)),
                       ],
                     ),
                   );
@@ -92,7 +103,7 @@ class _SupermarketsPageState extends State<SupermarketsPage> {
           elevation: 10,
           child: Icon(FontAwesomeIcons.plus),
           onPressed: () {
-            callDialog(context, brands);
+            callDialog(defaultBrand: null, documentID: "", name: "");
           },
         ),
       ),
@@ -100,18 +111,19 @@ class _SupermarketsPageState extends State<SupermarketsPage> {
     );
   }
 
-  Future callDialog(BuildContext context, BuiltList<Brand> brands) async {
+  Future callDialog(
+      {String documentID, String name, Brand defaultBrand}) async {
     return showDialog(
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) {
           return SupermarketFormDialog(
-            addSupermarket: null,
-            documentID: null,
-            name: "Alvalade",
-            edit: true,
-            editSupermarket: null,
+            addSupermarket: _supermarketBloc.onInsertSupermarket,
+            documentID: documentID,
+            name: name,
+            editSupermarket: _supermarketBloc.onEditSupermarket,
             brandsBuild: brands,
+            defaultBrand: defaultBrand,
           );
         });
   }

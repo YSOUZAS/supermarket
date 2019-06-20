@@ -10,16 +10,18 @@ class SupermarketFormDialog extends StatefulWidget {
   final Function editSupermarket;
   final String name;
   final String documentID;
-  final bool edit;
+
   final BuiltList<Brand> brandsBuild;
+  final Brand defaultBrand;
+
   SupermarketFormDialog(
       {Key key,
       this.addSupermarket,
       this.editSupermarket,
       this.name,
       this.documentID,
-      this.edit,
-      this.brandsBuild})
+      this.brandsBuild,
+      this.defaultBrand})
       : super(key: key);
 
   @override
@@ -30,6 +32,9 @@ class _SupermarketFormDialogState extends State<SupermarketFormDialog> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   List<DropdownMenuItem<Brand>> brands = List<DropdownMenuItem<Brand>>();
   Brand _currentBrand;
+  bool showErrorBrand = false;
+
+  final _nameTextController = TextEditingController();
 
   @override
   void initState() {
@@ -37,16 +42,17 @@ class _SupermarketFormDialogState extends State<SupermarketFormDialog> {
       brands.add(
           new DropdownMenuItem(value: brand, child: new Text(brand.data.name)));
     }
-    _currentBrand = widget.brandsBuild[0];
+    if (widget.defaultBrand != null)
+      _currentBrand = widget.defaultBrand;
+    else
+      _currentBrand = widget.brandsBuild[0];
+    _nameTextController.text =
+        widget.name.isNotEmpty == true ? widget.name : "";
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final _nameTextController = TextEditingController(
-      text: widget.name.isNotEmpty == true ? widget.name : "",
-    );
-
     return AlertDialog(
       elevation: 10,
       title: Text(widget.name.isNotEmpty == true
@@ -77,7 +83,13 @@ class _SupermarketFormDialogState extends State<SupermarketFormDialog> {
                   value: _currentBrand,
                   items: brands,
                   onChanged: changedDropDownItem,
-                )
+                ),
+                showErrorBrand
+                    ? Text(
+                        "choose a different brand",
+                        style: TextStyle(color: Colors.red, fontSize: 13),
+                      )
+                    : Container()
               ],
             ),
           ),
@@ -87,14 +99,23 @@ class _SupermarketFormDialogState extends State<SupermarketFormDialog> {
         FlatButton(
           child: Text("Save"),
           onPressed: () {
-            if (!_formKey.currentState.validate()) {
+            if (!_formKey.currentState.validate() &&
+                _currentBrand.documentID == widget.defaultBrand.documentID) {
+              setState(() {
+                showErrorBrand = true;
+              });
               return;
             }
-            if (!widget.edit)
-              widget.addSupermarket(_nameTextController.text);
+
+            setState(() {
+              showErrorBrand = false;
+            });
+            if (widget.defaultBrand == null)
+              widget.addSupermarket(
+                  _nameTextController.text, _currentBrand.documentID);
             else
-              widget.editSupermarket(
-                  widget.documentID, _nameTextController.text);
+              widget.editSupermarket(widget.documentID,
+                  _nameTextController.text, _currentBrand.documentID);
             Navigator.of(context).pop();
           },
         )
