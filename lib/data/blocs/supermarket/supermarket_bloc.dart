@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:built_collection/built_collection.dart';
 import 'package:supermarket/data/blocs/supermarket/index.dart';
-import 'package:supermarket/data/models/supermarket/index.dart';
 import 'package:supermarket/data/repository/firebase/index.dart';
 import 'package:supermarket/data/services/index.dart';
 

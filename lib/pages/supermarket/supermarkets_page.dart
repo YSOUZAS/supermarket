@@ -1,13 +1,10 @@
 import 'package:built_collection/built_collection.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kiwi/kiwi.dart' as kiwi;
 import 'package:supermarket/data/blocs/supermarket/index.dart';
 import 'package:supermarket/data/models/brand/index.dart';
-import 'package:supermarket/data/services/index.dart';
 import 'package:supermarket/pages/common/widgets/common_slidable.dart';
 import 'package:supermarket/pages/common/widgets/index.dart';
 import 'package:supermarket/pages/supermarket/widgets/index.dart';
