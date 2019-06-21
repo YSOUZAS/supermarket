@@ -3,10 +3,15 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@android:color/white" />
 
-    <!-- You can insert your own image assets here -->
-    <!-- <item>
+
+    <item>
         <bitmap
             android:gravity="center"
-            android:src="@mipmap/launch_image" />
-    </item> -->
+            android:src="@mipmap/ic_launcher"/>
+    </item> 
+       <com.caverock.androidsvg.SVGImageView
+    xmlns:svg="http://schemas.android.com/apk/res-auto"
+    android:layout_width="100dp"
+    android:layout_height="50dp"
+    svg:svg="sources/ring.svg"/>
 </layer-list>
