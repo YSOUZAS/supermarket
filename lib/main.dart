@@ -14,6 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      checkerboardRasterCacheImages: true,
+      locale: Locale('pt-br', 'BR'),
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
