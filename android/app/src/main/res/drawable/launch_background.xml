@@ -8,10 +8,7 @@
         <bitmap
             android:gravity="center"
             android:src="@mipmap/ic_launcher"/>
-    </item> 
-       <com.caverock.androidsvg.SVGImageView
-    xmlns:svg="http://schemas.android.com/apk/res-auto"
-    android:layout_width="100dp"
-    android:layout_height="50dp"
-    svg:svg="sources/ring.svg"/>
+    </item>
+
+
 </layer-list>
